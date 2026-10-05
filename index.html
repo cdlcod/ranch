@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم رانش | Ranch Restaurant - Fresh & Tasty</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#D32F2F',
+                            redDark: '#9A0007',
+                            gold: '#FFB300',
+                            goldDark: '#C68400',
+                            black: '#121212',
+                            cardBg: '#1E1E1E',
+                            lightBg: '#2A2A2A'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px #FFB300;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #FFB300;
+            border-radius: 4px;
+        }
+        .badge-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-white min-h-screen flex flex-col custom-scrollbar selection:bg-brand-gold selection:text-black">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-brand-redDark via-brand-red to-brand-redDark text-white text-xs sm:text-sm py-2 px-4 text-center font-bold flex justify-between items-center z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <span class="flex items-center gap-2">
+                <i class="fa-solid font-bold fa-location-dot text-brand-gold"></i>
+                <span class="hidden sm:inline">العنوان:</span> ههيا - البحر بجوار مركز الشرطة
+            </span>
+            <div class="flex items-center gap-4 dir-ltr">
+                <a href="tel:01270332174" class="hover:text-brand-gold transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-phone text-xs"></i> 01270332174
+                </a>
+                <span class="hidden md:inline">|</span>
+                <a href="tel:01505941807" class="hidden md:flex hover:text-brand-gold transition-colors items-center gap-1">
+                    <i class="fa-solid fa-phone text-xs"></i> 01505941807
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 bg-brand-black/95 backdrop-blur-md border-b border-gray-800 z-40 shadow-xl">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-full border-2 border-brand-gold bg-black flex items-center justify-center p-1 overflow-hidden shadow-lg group-hover:scale-105 transition-transform">
+                    <div class="text-center">
+                        <span class="block text-brand-gold font-extrabold text-lg leading-none tracking-tighter">Ranch</span>
+                        <span class="text-[8px] text-brand-red font-bold uppercase tracking-widest block">Tasty</span>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black text-brand-gold tracking-wider group-hover:text-white transition-colors">RANCH</h1>
+                    <p class="text-[10px] text-gray-400 -mt-1 font-semibold">CREPE • PIZZA • BURGER • PASTA</p>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex items-center relative w-1/3">
+                <input type="text" id="searchInput" onkeyup="filterMenu()" placeholder="ابحث عن وجبتك المفضلة..." 
+                    class="w-full bg-brand-cardBg border border-gray-700 rounded-full py-2 px-4 pr-10 text-sm focus:outline-none focus:border-brand-gold transition-colors text-white placeholder-gray-400">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 text-gray-400"></i>
+            </div>
+
+            <!-- Actions: Cart & Quick Call -->
+            <div class="flex items-center gap-3">
+                <a href="tel:01270332174" class="hidden sm:flex items-center gap-2 bg-brand-red hover:bg-brand-redDark text-white font-bold py-2 px-4 rounded-full text-sm transition-all shadow-md hover:shadow-red-900/50">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>اطلب الآن</span>
+                </a>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCart()" class="relative bg-brand-gold hover:bg-brand-goldDark text-black font-bold p-2.5 rounded-full transition-transform active:scale-95 shadow-lg flex items-center justify-center">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cartCount" class="absolute -top-1 -left-1 bg-brand-red text-white text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-black font-extrabold">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar (Mobile) -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative w-full">
+                <input type="text" id="searchInputMobile" onkeyup="syncAndFilterMobile()" placeholder="ابحث عن وجبتك المفضلة..." 
+                    class="w-full bg-brand-cardBg border border-gray-700 rounded-full py-2 px-4 pr-10 text-sm focus:outline-none focus:border-brand-gold text-white placeholder-gray-400">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative bg-gradient-to-b from-brand-black via-brand-cardBg to-brand-black py-12 px-4 border-b border-gray-800 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#FFB300_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="text-center md:text-right space-y-4 md:w-1/2">
+                <span class="bg-brand-red/20 text-brand-red border border-brand-red/40 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase inline-block">
+                    🔥 طعم لا يُقاوَم • طازج ولذيذ
+                </span>
+                <h2 class="text-4xl md:text-6xl font-black leading-tight">
+                    استمتع بأشهى وجبات <span class="text-brand-gold block mt-1">RANCH</span>
+                </h2>
+                <p class="text-gray-300 text-sm md:text-base max-w-lg leading-relaxed">
+                    أفضل تشكيلة من البرجر العصير، البيتزا المليئة بالجبنة، الكريب والمكرونات، ووجبات الاستربس المقرمشة بالخلطة الخاصة!
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-2">
+                    <a href="#category-nav" class="bg-brand-gold hover:bg-brand-goldDark text-black font-extrabold py-3 px-8 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                        استعرض المنيو
+                    </a>
+                    <a href="https://wa.me/201270332174" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        واتساب مباشر
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual Graphic Showcase -->
+            <div class="md:w-1/2 flex justify-center relative">
+                <div class="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-tr from-brand-red to-brand-gold rounded-full p-2 shadow-2xl shadow-brand-red/20 animate-pulse">
+                    <div class="w-full h-full bg-brand-black rounded-full flex flex-col items-center justify-center text-center p-6 border-4 border-dashed border-brand-gold/40">
+                        <i class="fa-solid fa-burger text-6xl text-brand-gold mb-3"></i>
+                        <h3 class="text-2xl font-black text-white">RANCH BURGER</h3>
+                        <p class="text-xs text-brand-gold font-bold mt-1">الأكثر مبيعاً - BEST SELLER</p>
+                        <span class="mt-3 bg-brand-red text-white text-xs px-3 py-1 rounded-full font-extrabold">160 EGP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Category Nav Bar -->
+    <nav id="category-nav" class="sticky top-[73px] bg-brand-cardBg/95 backdrop-blur-md border-b border-gray-800 z-30 py-3 px-4 shadow-md overflow-x-auto custom-scrollbar">
+        <div class="container mx-auto flex items-center gap-2 min-w-max">
+            <button onclick="filterCategory('all')" class="cat-btn active bg-brand-gold text-black font-extrabold px-4 py-2 rounded-xl text-sm transition-all flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-border-all"></i> الكل
+            </button>
+            <button onclick="filterCategory('strips')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍗 وجبات الاستربس
+            </button>
+            <button onclick="filterCategory('twister')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🌯 التويستر
+            </button>
+            <button onclick="filterCategory('burger')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍔 البرجر (لحم ودجاج)
+            </button>
+            <button onclick="filterCategory('pizza')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍕 البيتزا
+            </button>
+            <button onclick="filterCategory('crepe')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🥙 الكريب وميكس كريب
+            </button>
+            <button onclick="filterCategory('rizoo')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍚 الريزو
+            </button>
+            <button onclick="filterCategory('fries')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍟 الفرايز
+            </button>
+            <button onclick="filterCategory('pasta')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🍝 المكرونة / الباستا
+            </button>
+            <button onclick="filterCategory('appetizers')" class="cat-btn bg-brand-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-all border border-gray-700 flex items-center gap-2">
+                🧀 المقبلات والإضافات
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 py-8 flex-1">
+        
+        <!-- Menu Categories & Grid -->
+        <div id="menuContainer" class="space-y-12">
+            <!-- Items rendered dynamically via Javascript -->
+        </div>
+
+        <!-- Empty Search Result Container -->
+        <div id="noResults" class="hidden text-center py-16">
+            <i class="fa-solid fa-utensils text-5xl text-gray-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-400">لم يتم العثور على أي وجبات تطابق بحثك</h3>
+            <p class="text-gray-500 text-sm mt-1">جرب البحث بكلمات أخرى مثل "برجر", "بيتزا", "كريب"</p>
+        </div>
+
+    </main>
+
+    <!-- Drawer / Cart Slide-over -->
+    <div id="cartModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity flex justify-end">
+        <div class="bg-brand-cardBg w-full max-w-md h-full flex flex-col shadow-2xl border-r border-gray-800 transform transition-transform duration-300">
+            <!-- Cart Header -->
+            <div class="p-4 bg-brand-black border-b border-gray-800 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-brand-gold text-xl"></i>
+                    <h2 class="text-lg font-bold text-white">سلة المشتريات</h2>
+                </div>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
+                <!-- Cart items rendered dynamically -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-4 bg-brand-black border-t border-gray-800 space-y-4">
+                <div class="flex justify-between items-center text-lg font-black">
+                    <span>الإجمالي:</span>
+                    <span id="cartTotalPrice" class="text-brand-gold">0 EGP</span>
+                </div>
+
+                <!-- Customer Details Input for Ordering -->
+                <div class="space-y-2 text-xs">
+                    <input type="text" id="custName" placeholder="الاسم الكريم *" class="w-full bg-brand-cardBg border border-gray-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <input type="tel" id="custPhone" placeholder="رقم الهاتف للتواصل *" class="w-full bg-brand-cardBg border border-gray-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <textarea id="custNotes" rows="2" placeholder="أي ملاحظات إضافية (عنوان التفصيلي / بدون بصل...)" class="w-full bg-brand-cardBg border border-gray-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold resize-none"></textarea>
+                </div>
+
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-base shadow-lg shadow-emerald-900/30">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    إرسال الطلب عبر الواتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black border-t border-gray-800 mt-12 py-8 text-gray-400 text-sm">
+        <div class="container mx-auto px-4 text-center space-y-4">
+            <div class="flex justify-center items-center gap-2">
+                <span class="text-2xl font-black text-brand-gold">RANCH</span>
+                <span class="text-xs bg-brand-red text-white font-bold px-2 py-0.5 rounded">FRESH & TASTY</span>
+            </div>
+            <p class="max-w-md mx-auto text-xs text-gray-500">
+                عنوان المطعم: ههيا - البحر بجوار مركز الشرطة
+            </p>
+            <div class="flex justify-center gap-6 text-xl text-brand-gold">
+                <a href="tel:01270332174" class="hover:text-white transition-colors"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/201270332174" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+            <div class="border-t border-gray-800 pt-4 text-xs text-gray-600">
+                جميع الحقوق محفوظة © 2026 مطعم Ranch
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Full Menu Dataset Extracted from Menu Images
+        const menuData = [
+            // Strips Meal
+            {
+                id: 's1',
+                category: 'strips',
+                title: 'وجبة 2 قطع',
+                enTitle: '2 Pcs Strips Meal',
+                desc: '1 خبز + بطاطس + 1 كول سلو + 1 كاتشب',
+                basePrice: 110,
+                hasFlavor: true,
+                image: '🍗'
+            },
+            {
+                id: 's2',
+                category: 'strips',
+                title: 'وجبة 3 قطع',
+                enTitle: '3 Pcs Strips Meal',
+                desc: '2 خبز + بطاطس + 1 كول سلو + 2 كاتشب',
+                basePrice: 140,
+                hasFlavor: true,
+                image: '🍗'
+            },
+            {
+                id: 's3',
+                category: 'strips',
+                title: 'وجبة 5 قطع',
+                enTitle: '5 Pcs Strips Meal',
+                desc: '3 خبز + بطاطس + 2 كول سلو + 3 كاتشب',
+                basePrice: 170,
+                hasFlavor: true,
+                image: '🍗'
+            },
+            {
+                id: 's4',
+                category: 'strips',
+                title: 'وجبة 6 قطع',
+                enTitle: '6 Pcs Strips Meal',
+                desc: '4 خبز + بطاطس + 2 كول سلو + 4 كاتشب',
+                basePrice: 190,
+                hasFlavor: true,
+                image: '🍗'
+            },
+            {
+                id: 's5',
+                category: 'strips',
+                title: 'وجبة 8 قطع',
+                enTitle: '8 Pcs Strips Meal',
+                desc: '5 خبز + بطاطس + 3 كول سلو + 5 كاتشب',
+                basePrice: 240,
+                hasFlavor: true,
+                image: '🍗'
+            },
+
+            // Twister
+            {
+                id: 't1',
+                category: 'twister',
+                title: 'تويستر بطاطس موتزريلا',
+                enTitle: 'Mozzarella Fries Twister',
+                desc: 'بطاطس - جبنة موتزريلا - صوص شيدر - كاتشب - مايونيز - عيش سوري',
+                basePrice: 65,
+                hasFlavor: true,
+                image: '🌯'
+            },
+            {
+                id: 't2',
+                category: 'twister',
+                title: 'تويستر كرسبي',
+                enTitle: 'Crispy Twister',
+                desc: '2 قطعة استربس - خس - خيار مخلل - صوص شيدر - صوص ساوث ايلاند - عيش سوري',
+                basePrice: 100,
+                hasFlavor: true,
+                image: '🌯'
+            },
+            {
+                id: 't3',
+                category: 'twister',
+                title: 'تويستر زنجر',
+                enTitle: 'Zinger Twister',
+                desc: '2 قطعة استربس - خس - خيار مخلل - صوص شيدر - صوص رانش - شريحة بيكون - عيش سوري',
+                basePrice: 110,
+                hasFlavor: true,
+                image: '🌯'
+            },
+            {
+                id: 't4',
+                category: 'twister',
+                title: 'تويستر سوبر كرانشي',
+                enTitle: 'Super Crunchy Twister',
+                desc: '2 قطعة استربس - خس - خيار مخلل - صوص شيدر - صوص رانش - شريحة تركي - عيش سوري',
+                basePrice: 110,
+                hasFlavor: true,
+                image: '🌯'
+            },
+            {
+                id: 't5',
+                category: 'twister',
+                title: 'تويستر مشوي صدور',
+                enTitle: 'Grilled Chicken Twister',
+                desc: 'صدور مشوية - خس - خيار مخلل - صوص شيدر - صوص باربيكيو - عيش سوري',
+                basePrice: 110,
+                hasFlavor: true,
+                image: '🌯'
+            },
+
+            // Burgers (Beef & Chicken)
+            {
+                id: 'b1',
+                category: 'burger',
+                title: 'Classic Burger (كلاسيك)',
+                enTitle: 'Beef or Chicken Classic Burger',
+                desc: 'قطعة برجر أو فرايد تشيكن - خس - طماطم - صوص شيدر - صوص تكساس/ساوث ايلاند',
+                variants: [
+                    { name: 'سنجل Single', price: 95 },
+                    { name: 'دبل Double', price: 140 }
+                ],
+                hasFlavor: true,
+                image: '🍔'
+            },
+            {
+                id: 'b2',
+                category: 'burger',
+                title: 'Smoky Burger (سموكي)',
+                enTitle: 'Beef or Chicken Smoky Burger',
+                desc: 'برجر أو فرايد تشيكن - خس - طماطم - صوص شيدر - بيكون/تركي مدخن - صوص باربيكيو',
+                variants: [
+                    { name: 'سنجل Single', price: 100 },
+                    { name: 'دبل Double', price: 150 }
+                ],
+                hasFlavor: true,
+                image: '🍔'
+            },
+            {
+                id: 'b3',
+                category: 'burger',
+                title: 'Mix Cheese Burger (ميكس تشيز)',
+                enTitle: 'Mix Cheese Burger',
+                desc: 'برجر أو فرايد تشيكن - صوص جبنة - موتزريلا ستيكس - طماطم وخس',
+                variants: [
+                    { name: 'سنجل Single', price: 100 },
+                    { name: 'دبل Double', price: 150 }
+                ],
+                hasFlavor: true,
+                image: '🍔'
+            },
+            {
+                id: 'b4',
+                category: 'burger',
+                title: 'BBQ Burger (باربيكيو)',
+                enTitle: 'BBQ Burger',
+                desc: 'برجر أو فرايد تشيكن - حلقات بصل - صوص باربيكيو - صوص شيدر',
+                variants: [
+                    { name: 'سنجل Single', price: 100 },
+                    { name: 'دبل Double', price: 150 }
+                ],
+                hasFlavor: true,
+                image: '🍔'
+            },
+            {
+                id: 'b5',
+                category: 'burger',
+                title: 'RANCH Burger (برجر رانش المميز - Best Seller)',
+                enTitle: 'Signature Ranch Burger',
+                desc: 'قطعة لحم + قطعة فرايد تشيكن + خس + بصل + طماطم + صوصات رانش وتكساس + موتزريلا ستيكس + بطاطس',
+                basePrice: 160,
+                hasFlavor: true,
+                isBestSeller: true,
+                image: '👑'
+            },
+
+            // Pizza
+            {
+                id: 'p1',
+                category: 'pizza',
+                title: 'بيتزا مارجريتا',
+                enTitle: 'Margherita Pizza',
+                desc: 'صلصة بيتزا - جبنة موتزريلا غنية - أعشاب',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 110 },
+                    { name: 'كبير Large (L)', price: 135 }
+                ],
+                image: '🍕'
+            },
+            {
+                id: 'p2',
+                category: 'pizza',
+                title: 'بيتزا تشيز لافرز',
+                enTitle: 'Cheese Lovers Pizza',
+                desc: 'ميكس أجبان غني (موتزريلا، شيدر، كيري، رومي)',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 125 },
+                    { name: 'كبير Large (L)', price: 145 }
+                ],
+                image: '🍕'
+            },
+            {
+                id: 'p3',
+                category: 'pizza',
+                title: 'بيتزا (سوبر كرانشي / استربس / شيش / باربيكيو / رانش)',
+                enTitle: 'Chicken Pizza Varieties',
+                desc: 'اختر طعمك المفضل من قطع الدجاج المقرمش أو المشوي مع الجبنة الموتزريلا',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 150 },
+                    { name: 'كبير Large (L)', price: 175 }
+                ],
+                image: '🍕'
+            },
+            {
+                id: 'p4',
+                category: 'pizza',
+                title: 'بيتزا ببيروني / سلامي / سوسيس',
+                enTitle: 'Pepperoni / Salami / Sausage Pizza',
+                desc: 'قطع ببيروني زكية مع صلصة البيتزا والجبنة الموتزريلا',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 140 },
+                    { name: 'كبير Large (L)', price: 165 }
+                ],
+                image: '🍕'
+            },
+            {
+                id: 'p5',
+                category: 'pizza',
+                title: 'بيتزا مشكل فراخ / مشكل لحوم',
+                enTitle: 'Mix Chicken or Mix Meat Pizza',
+                desc: 'توليفة ممتازة من اللحوم أو الدجاج المتنوع مع ميكس الجبن',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 160 },
+                    { name: 'كبير Large (L)', price: 190 }
+                ],
+                image: '🍕'
+            },
+            {
+                id: 'p6',
+                category: 'pizza',
+                title: 'بيتزا Ranch الخاصة',
+                enTitle: 'Special Ranch Pizza',
+                desc: 'خلطة رانش المميزة مع قطع الدجاج واللحوم وميكس الأجبان الفاخرة',
+                variants: [
+                    { name: 'وسط Medium (M)', price: 160 },
+                    { name: 'كبير Large (L)', price: 200 }
+                ],
+                isBestSeller: true,
+                image: '🍕'
+            },
+
+            // Crepe
+            {
+                id: 'c1',
+                category: 'crepe',
+                title: 'كريب بطاطس / ميكس جبن',
+                enTitle: 'Fries / Mix Cheese Crepe',
+                desc: 'بطاطس مقرمشة أو تشكيلة أجبان سايحة مع الخضار',
+                variants: [
+                    { name: 'عادي Normal', price: 65 },
+                    { name: 'رول Roll', price: 100 }
+                ],
+                image: '🥙'
+            },
+            {
+                id: 'c2',
+                category: 'crepe',
+                title: 'كريب بانيه / استربس / شيش طاووق',
+                enTitle: 'Chicken Crepe (Crispy/Strips/Shish)',
+                desc: 'قطع دجاج طازجة مع الجبن والصلصات',
+                variants: [
+                    { name: 'عادي Normal', price: 100 },
+                    { name: 'رول Roll', price: 140 }
+                ],
+                image: '🥙'
+            },
+            {
+                id: 'c3',
+                category: 'crepe',
+                title: 'ميكس فراخ مدخن (Best Seller)',
+                enTitle: 'Smoked Chicken Mix Crepe',
+                desc: 'بانيه فريش - استربس - شيش - تركي مدخن - ميكس جبن',
+                basePrice: 130,
+                isBestSeller: true,
+                image: '🥙'
+            },
+            {
+                id: 'c4',
+                category: 'crepe',
+                title: 'كريب Ranch المميز',
+                enTitle: 'Ranch Special Crepe',
+                desc: 'برجر - شاورما لحم - استربس - شيش - ميكس جبن',
+                basePrice: 150,
+                image: '🥙'
+            },
+
+            // Rizoo
+            {
+                id: 'r1',
+                category: 'rizoo',
+                title: 'كلاسيك ريزو',
+                enTitle: 'Classic Rizoo',
+                desc: 'أرز بسمتي متبل + قطع كرسبي + صوص ريزو غني',
+                basePrice: 100,
+                hasFlavor: true,
+                image: '🍚'
+            },
+            {
+                id: 'r2',
+                category: 'rizoo',
+                title: 'بوووم ريزو',
+                enTitle: 'Boom Rizoo',
+                desc: 'أرز بسمتي متبل + قطع كرسبي + صوص ريزو + صوص شيدر غرقان',
+                basePrice: 110,
+                hasFlavor: true,
+                image: '🍚'
+            },
+            {
+                id: 'r3',
+                category: 'rizoo',
+                title: 'ريزو شيش',
+                enTitle: 'Shish Rizoo',
+                desc: 'أرز بسمتي متبل + قطع شيش طاووق + صوص ريزو + صوص شيدر',
+                basePrice: 100,
+                hasFlavor: true,
+                image: '🍚'
+            },
+            {
+                id: 'r4',
+                category: 'rizoo',
+                title: 'ريزو رانش',
+                enTitle: 'Ranch Rizoo',
+                desc: 'أرز ريزو متبل + قطع كرسبي + شيش طاووق + صوص ريزو + صوص شيدر',
+                basePrice: 120,
+                hasFlavor: true,
+                image: '🍚'
+            },
+
+            // Fries
+            {
+                id: 'f1',
+                category: 'fries',
+                title: 'فرايز استربس',
+                enTitle: 'Strips Fries',
+                desc: 'بطاطس مقرمشة + قطع استربس كرسبي + صوص شيدر',
+                basePrice: 80,
+                hasFlavor: true,
+                image: '🍟'
+            },
+            {
+                id: 'f2',
+                category: 'fries',
+                title: 'موزاريلا فرايز',
+                enTitle: 'Mozzarella Fries',
+                desc: 'بطاطس مع طبقة جبنة موزاريلا تدخل الفرن وتاخد وش ذهبي سايح',
+                basePrice: 60,
+                image: '🍟'
+            },
+            {
+                id: 'f3',
+                category: 'fries',
+                title: 'موزاريلا فرايز استربس',
+                enTitle: 'Mozzarella Strips Fries',
+                desc: 'بطاطس مقرمشة + قطع استربس + صوص شيدر + جبنة موزاريلا سايحة بالفرن',
+                basePrice: 90,
+                hasFlavor: true,
+                image: '🍟'
+            },
+            {
+                id: 'f4',
+                category: 'fries',
+                title: 'فرايز رانش',
+                enTitle: 'Ranch Fries',
+                desc: 'بطاطس مقرمشة + صوص شيدر + برجر لحم بصوص تكساس + جبنة موزاريلا سايحة',
+                basePrice: 135,
+                hasFlavor: true,
+                image: '🍟'
+            },
+
+            // Pasta
+            {
+                id: 'pa1',
+                category: 'pasta',
+                title: 'باستا الفريدو',
+                enTitle: 'Alfredo Pasta',
+                desc: 'مكرونة بصوص الوايت صوص الكريمي والغني مع قطع الدجاج',
+                basePrice: 85,
+                image: '🍝'
+            },
+            {
+                id: 'pa2',
+                category: 'pasta',
+                title: 'ماك أند تشيز',
+                enTitle: 'Mac and Cheese',
+                desc: 'مكرونة غرقانة بصوص الشيدر والأجبان السايحة',
+                basePrice: 85,
+                image: '🧀'
+            },
+            {
+                id: 'pa3',
+                category: 'pasta',
+                title: 'نجرسكو',
+                enTitle: 'Negresco Pasta',
+                desc: 'باستا بقطع الدجاج والوايت صوص والجبنة الموتزريلا المحمرة بالفرن',
+                basePrice: 90,
+                image: '🍝'
+            },
+            {
+                id: 'pa4',
+                category: 'pasta',
+                title: 'بشاميل / استربس / باستا رانش',
+                enTitle: 'Bechamel / Strips / Ranch Pasta',
+                desc: 'باستا غنية بالخلطة الخاصة والصوصات اللذيذة',
+                basePrice: 90,
+                image: '🍝'
+            },
+
+            // Appetizers
+            {
+                id: 'ap1',
+                category: 'appetizers',
+                title: 'باكيت بطاطس',
+                enTitle: 'French Fries',
+                desc: 'بطاطس مقلية ذهبية ومقرمشة',
+                basePrice: 25,
+                image: '🍟'
+            },
+            {
+                id: 'ap2',
+                category: 'appetizers',
+                title: 'بطاطس شيدر',
+                enTitle: 'Cheddar Fries',
+                desc: 'بطاطس مقرمشة مغطاة بصوص الشيدر اللذيذ',
+                basePrice: 40,
+                image: '🍟'
+            },
+            {
+                id: 'ap3',
+                category: 'appetizers',
+                title: 'موتزريلا ستيكس',
+                enTitle: 'Mozzarella Sticks',
+                desc: 'أصابع الجبنة الموتزريلا المقرمشة والماظية',
+                variants: [
+                    { name: '3 قطع (3 Pcs)', price: 30 },
+                    { name: '6 قطع (6 Pcs)', price: 60 }
+                ],
+                image: '🧀'
+            },
+            {
+                id: 'ap4',
+                category: 'appetizers',
+                title: 'إضافة صوص / جبنة extra',
+                enTitle: 'Extra Sauce or Cheese',
+                desc: 'إضافة أي نوع صوص خاص أو جبنة إضافية للوجبة',
+                basePrice: 15,
+                image: '🥣'
+            }
+        ];
+
+        // App State
+        let cart = [];
+        let currentCategory = 'all';
+
+        // Render Menu
+        function renderMenu(itemsToRender = menuData) {
+            const container = document.getElementById('menuContainer');
+            const noResults = document.getElementById('noResults');
+            container.innerHTML = '';
+
+            if (itemsToRender.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            // Categories mapping for section titles
+            const catTitles = {
+                strips: '🍗 وجبات الاستربس (Strips Meal)',
+                twister: '🌯 التويستر (Twister)',
+                burger: '🍔 البرجر (Beef & Chicken Burger)',
+                pizza: '🍕 البيتزا (Pizza)',
+                crepe: '🥙 الكريب وميكس كريب (Crepe)',
+                rizoo: '🍚 الريزو (Rizoo)',
+                fries: '🍟 الفرايز (Fries)',
+                pasta: '🍝 المكرونة / الباستا (Pasta)',
+                appetizers: '🧀 المقبلات والإضافات (Appetizers)'
+            };
+
+            // Group by categories if "all" selected
+            let categories = [...new Set(itemsToRender.map(i => i.category))];
+
+            categories.forEach(cat => {
+                const catItems = itemsToRender.filter(i => i.category === cat);
+                if (catItems.length === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'space-y-4';
+
+                section.innerHTML = `
+                    <div class="flex items-center gap-3 border-r-4 border-brand-gold pr-3 my-6">
+                        <h2 class="text-2xl font-black text-white">${catTitles[cat] || cat}</h2>
+                        <span class="text-xs text-brand-gold bg-brand-gold/10 px-2 py-1 rounded-full border border-brand-gold/20 font-bold">${catItems.length} وجبات</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${catItems.map(item => createItemCard(item)).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        // Generate Single Item Card HTML
+        function createItemCard(item) {
+            const hasVariants = item.variants && item.variants.length > 0;
+            const defaultPrice = hasVariants ? item.variants[0].price : item.basePrice;
+
+            return `
+                <div class="bg-brand-cardBg border border-gray-800 rounded-2xl p-5 hover:border-brand-gold/50 transition-all shadow-lg flex flex-col justify-between group relative overflow-hidden">
+                    ${item.isBestSeller ? `<span class="absolute top-3 left-3 bg-brand-red text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow badge-pulse z-10">🔥 BEST SELLER</span>` : ''}
+                    
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-2">
+                            <div class="text-3xl p-2 bg-brand-black rounded-xl border border-gray-800 group-hover:scale-110 transition-transform">${item.image}</div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-lg text-white group-hover:text-brand-gold transition-colors">${item.title}</h3>
+                                <p class="text-[11px] text-gray-400 font-semibold">${item.enTitle}</p>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-xs leading-relaxed my-3 line-clamp-2">${item.desc}</p>
+
+                        <!-- Variants Selector if available -->
+                        ${hasVariants ? `
+                            <div class="my-3 space-y-1.5">
+                                <label class="text-[11px] font-bold text-gray-400 block">اختر الحجم / النوع:</label>
+                                <select id="variant-${item.id}" class="w-full bg-brand-black border border-gray-700 rounded-lg text-xs p-2 text-white focus:border-brand-gold focus:outline-none">
+                                    ${item.variants.map((v, idx) => `<option value="${idx}">${v.name} - ${v.price} EGP</option>`).join('')}
+                                </select>
+                            </div>
+                        ` : ''}
+
+                        <!-- Flavor Selection if applicable -->
+                        ${item.hasFlavor ? `
+                            <div class="my-3 space-y-1">
+                                <label class="text-[11px] font-bold text-gray-400 block">النكهة:</label>
+                                <div class="flex gap-4 text-xs font-semibold">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" name="flavor-${item.id}" value="عادي (Regular)" checked class="accent-brand-gold">
+                                        <span>عادي Regular</span>
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-brand-red">
+                                        <input type="radio" name="flavor-${item.id}" value="حار (Hot 🔥)" class="accent-brand-red">
+                                        <span>حار Hot 🌶️</span>
+                                    </label>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between mt-3">
+                        <div>
+                            <span class="text-xs text-gray-400 block">السعر</span>
+                            <span class="text-xl font-black text-brand-gold">${defaultPrice} <span class="text-xs">EGP</span></span>
+                        </div>
+                        <button onclick="addToCart('${item.id}')" class="bg-brand-gold hover:bg-brand-goldDark text-black font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-2 transition-transform active:scale-95 shadow-md">
+                            <i class="fa-solid fa-plus"></i> إضافـة للسلة
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add Item To Cart
+        function addToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            if (!item) return;
+
+            let selectedPrice = item.basePrice;
+            let selectedVariantName = '';
+
+            // Check variants
+            if (item.variants && item.variants.length > 0) {
+                const variantSelect = document.getElementById(`variant-${item.id}`);
+                const selectedIdx = parseInt(variantSelect.value);
+                selectedPrice = item.variants[selectedIdx].price;
+                selectedVariantName = item.variants[selectedIdx].name;
+            }
+
+            // Check flavor
+            let selectedFlavor = '';
+            if (item.hasFlavor) {
+                const flavorRadios = document.getElementsByName(`flavor-${item.id}`);
+                for (const radio of flavorRadios) {
+                    if (radio.checked) {
+                        selectedFlavor = radio.value;
+                        break;
+                    }
+                }
+            }
+
+            // Cart item unique key (item + variant + flavor)
+            const cartKey = `${item.id}-${selectedVariantName}-${selectedFlavor}`;
+            const existingCartItem = cart.find(c => c.cartKey === cartKey);
+
+            if (existingCartItem) {
+                existingCartItem.qty++;
+            } else {
+                cart.push({
+                    cartKey: cartKey,
+                    id: item.id,
+                    title: item.title,
+                    variant: selectedVariantName,
+                    flavor: selectedFlavor,
+                    price: selectedPrice,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+            
+            // Visual feedback
+            const cartBtn = document.querySelector('button[onclick="toggleCart()"]');
+            cartBtn.classList.add('scale-125');
+            setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
+        }
+
+        // Update Cart UI Drawer
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotalPrice = document.getElementById('cartTotalPrice');
+
+            container.innerHTML = '';
+            let total = 0;
+            let totalQty = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500 space-y-2">
+                        <i class="fa-solid fa-cart-flatbed text-4xl mb-2"></i>
+                        <p class="font-bold">السلة فارغة حالياً</p>
+                        <p class="text-xs">تصفح المنيو وأضف وجباتك المفضلة!</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    totalQty += item.qty;
+
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.className = 'bg-brand-black p-3 rounded-xl border border-gray-800 flex justify-between items-center text-xs gap-2';
+                    cartItemEl.innerHTML = `
+                        <div class="flex-1">
+                            <h4 class="font-bold text-white">${item.title}</h4>
+                            ${item.variant ? `<span class="text-[10px] text-brand-gold bg-brand-gold/10 px-1.5 py-0.5 rounded inline-block mt-0.5">${item.variant}</span>` : ''}
+                            ${item.flavor ? `<span class="text-[10px] text-brand-red bg-brand-red/10 px-1.5 py-0.5 rounded inline-block mt-0.5 mr-1">${item.flavor}</span>` : ''}
+                            <div class="text-gray-400 mt-1 font-semibold">${item.price} EGP × ${item.qty} = <span class="text-white">${itemTotal} EGP</span></div>
+                        </div>
+
+                        <div class="flex items-center gap-1 bg-brand-cardBg border border-gray-700 rounded-lg p-1">
+                            <button onclick="changeQty(${index}, -1)" class="w-6 h-6 bg-gray-800 hover:bg-gray-700 rounded text-white font-bold flex items-center justify-center">-</button>
+                            <span class="w-5 text-center font-bold">${item.qty}</span>
+                            <button onclick="changeQty(${index}, 1)" class="w-6 h-6 bg-gray-800 hover:bg-gray-700 rounded text-white font-bold flex items-center justify-center">+</button>
+                        </div>
+                    `;
+                    container.appendChild(cartItemEl);
+                });
+            }
+
+            cartCount.innerText = totalQty;
+            cartTotalPrice.innerText = `${total} EGP`;
+        }
+
+        // Change Quantity in Cart
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // Toggle Cart Drawer
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.classList.toggle('hidden');
+        }
+
+        // Category Filtering
+        function filterCategory(category) {
+            currentCategory = category;
+
+            // Update Active Button State
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-gold', 'text-black', 'font-extrabold');
+                btn.classList.add('bg-brand-black', 'text-white');
+            });
+
+            event.currentTarget.classList.remove('bg-brand-black', 'text-white');
+            event.currentTarget.classList.add('bg-brand-gold', 'text-black', 'font-extrabold');
+
+            if (category === 'all') {
+                renderMenu(menuData);
+            } else {
+                const filtered = menuData.filter(item => item.category === category);
+                renderMenu(filtered);
+            }
+        }
+
+        // Search Engine
+        function filterMenu() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderMenu(currentCategory === 'all' ? menuData : menuData.filter(i => i.category === currentCategory));
+                return;
+            }
+
+            const searchResults = menuData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.enTitle.toLowerCase().includes(query) ||
+                item.desc.toLowerCase().includes(query)
+            );
+
+            renderMenu(searchResults);
+        }
+
+        function syncAndFilterMobile() {
+            const query = document.getElementById('searchInputMobile').value;
+            document.getElementById('searchInput').value = query;
+            filterMenu();
+        }
+
+        // Send Order via WhatsApp
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert('سلة المشتريات فارغة! اختر بعض الوجبات أولاً.');
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const notes = document.getElementById('custNotes').value.trim();
+
+            if (!name || !phone) {
+                alert('يرجى ملء الاسم ورقم الهاتف لإكمال الطلب.');
+                return;
+            }
+
+            let orderText = `*طلب جديد من موقع مطعم Ranch 🍔🔥*\n`;
+            orderText += `----------------------------------\n`;
+            orderText += `👤 *الاسم:* ${name}\n`;
+            orderText += `📞 *رقم الهاتف:* ${phone}\n`;
+            if (notes) orderText += `📝 *ملاحظات:* ${notes}\n`;
+            orderText += `----------------------------------\n`;
+            orderText += `🛒 *تفاصيل الوجبات:*\n\n`;
+
+            let grandTotal = 0;
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.qty;
+                grandTotal += itemTotal;
+                orderText += `${i + 1}. *${item.title}*\n`;
+                if (item.variant) orderText += `   - الحجم/النوع: ${item.variant}\n`;
+                if (item.flavor) orderText += `   - النكهة: ${item.flavor}\n`;
+                orderText += `   - الكمية: ${item.qty} × ${item.price} = ${itemTotal} EGP\n\n`;
+            });
+
+            orderText += `----------------------------------\n`;
+            orderText += `💰 *الإجمالي الكلي:* ${grandTotal} EGP\n`;
+            orderText += `📍 *ملاحظة:* يرجى تأكيد استلام الطلب ومدة التوصيل.`;
+
+            const encodedText = encodeURIComponent(orderText);
+            const waUrl = `https://wa.me/201270332174?text=${encodedText}`;
+
+            window.open(waUrl, '_blank');
+        }
+
+        window.onload = function() {
+            renderMenu();
+        };
+    </script>
+</body>
+</html>
